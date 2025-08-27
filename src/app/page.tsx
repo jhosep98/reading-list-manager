@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <main>
-      <h1>Medicore</h1>
+      <h1 className="text-3xl font-bold underline">MediCore</h1>
     </main>
   )
 }
