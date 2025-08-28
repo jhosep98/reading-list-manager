@@ -6,7 +6,8 @@
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": ["**", "!dist/**/*", "!node_modules/**/*", "!.next/**/*"]
   },
   "formatter": {
     "enabled": true,
@@ -24,9 +25,11 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
-    },
-    "includes": ["**", "!dist/**/*"]
+      "recommended": true,
+      "suspicious": {
+        "noUnknownAtRules": "off"
+      }
+    }
   },
   "javascript": {
     "formatter": {
