@@ -1,8 +1,7 @@
 'use client'
 
-import { BookOpen, Bot, Command, Settings2, SquareTerminal } from 'lucide-react'
+import { BookOpen, Command, Laptop, ScreenShare, Video } from 'lucide-react'
 import type * as React from 'react'
-
 import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
 import {
@@ -19,29 +18,30 @@ const data = {
   user: {
     name: 'shadcn',
     email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
+    avatar: '/user.jpg',
   },
   navMain: [
     {
-      title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
+      title: 'Books',
+      url: '/books',
+      icon: BookOpen,
       isActive: true,
     },
     {
-      title: 'Models',
-      url: '#',
-      icon: Bot,
+      title: 'Movies',
+      url: '/movies',
+      icon: Video,
     },
     {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
+      title: 'Animes',
+      url: '/animes',
+      icon: Laptop,
     },
+
     {
-      title: 'Settings',
-      url: '#',
-      icon: Settings2,
+      title: 'Websites',
+      url: '/websites',
+      icon: ScreenShare,
     },
   ],
 }

@@ -82,7 +82,7 @@ function SidebarProvider({
         _setOpen(openState)
       }
 
-      Cookies.set(SIDEBAR_COOKIE_NAME, openState, {
+      Cookies.set(SIDEBAR_COOKIE_NAME, `${openState}`, {
         expires: SIDEBAR_COOKIE_MAX_AGE,
         path: '/',
       })

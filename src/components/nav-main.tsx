@@ -1,13 +1,11 @@
 'use client'
 
-import { ChevronRight, type LucideIcon } from 'lucide-react'
-
-import { Collapsible, CollapsibleTrigger } from '@/components/ui/collapsible'
+import type { LucideIcon } from 'lucide-react'
+import { Collapsible } from '@/components/ui/collapsible'
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
@@ -28,7 +26,7 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Pocket</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
@@ -39,14 +37,6 @@ export function NavMain({
                   <span>{item.title}</span>
                 </a>
               </SidebarMenuButton>
-              {item.items?.length ? (
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuAction className="data-[state=open]:rotate-90">
-                    <ChevronRight />
-                    <span className="sr-only">Toggle</span>
-                  </SidebarMenuAction>
-                </CollapsibleTrigger>
-              ) : null}
             </SidebarMenuItem>
           </Collapsible>
         ))}
