@@ -1,6 +1,6 @@
 'use client'
 
-import type { LucideIcon } from 'lucide-react'
+import { ChevronRight, type LucideIcon } from 'lucide-react'
 import { Collapsible } from '@/components/ui/collapsible'
 import {
   SidebarGroup,
@@ -26,14 +26,14 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Pocket</SidebarGroupLabel>
+      <SidebarGroupLabel>Sections</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title}>
                 <a href={item.url}>
-                  <item.icon />
+                  <ChevronRight />
                   <span>{item.title}</span>
                 </a>
               </SidebarMenuButton>
