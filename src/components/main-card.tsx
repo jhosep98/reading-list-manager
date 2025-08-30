@@ -111,7 +111,7 @@ export function MainCard({
       </div>
 
       <CardContent>
-        <Badge className="rounded-full mb-0.5 bg-transparent text-primary px-0 text-sm">
+        <Badge className="rounded-full mb-0.5 bg-transparent text-sidebar-primary px-0 text-sm">
           {tag}
         </Badge>
 

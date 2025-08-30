@@ -1,5 +1,6 @@
 import { AppSidebar } from '@/components/app-sidebar'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { EntryStoreProvider } from '@/context/entry-store-provider'
 
 export default function AppLayout({
   children,
@@ -7,9 +8,11 @@ export default function AppLayout({
   children: React.ReactNode
 }>) {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>{children}</SidebarInset>
-    </SidebarProvider>
+    <EntryStoreProvider>
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>{children}</SidebarInset>
+      </SidebarProvider>
+    </EntryStoreProvider>
   )
 }
