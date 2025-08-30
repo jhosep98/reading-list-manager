@@ -1,6 +1,7 @@
 'use client'
 
 import { ChevronRight, type LucideIcon } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 import { Collapsible } from '@/components/ui/collapsible'
 import {
   SidebarGroup,
@@ -9,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+import { cn } from '@/lib/utils'
 
 export function NavMain({
   items,
@@ -17,29 +19,41 @@ export function NavMain({
     title: string
     url: string
     icon: LucideIcon
-    isActive?: boolean
     items?: {
       title: string
       url: string
     }[]
   }[]
 }) {
+  const pathname = usePathname()
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Sections</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.title}>
-                <a href={item.url}>
-                  <ChevronRight />
-                  <span>{item.title}</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </Collapsible>
-        ))}
+        {items.map((item) => {
+          const isActive = pathname === item.url
+
+          return (
+            <Collapsible key={item.title} asChild>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  tooltip={item.title}
+                  className={cn(
+                    isActive &&
+                      'bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground',
+                  )}
+                >
+                  <a href={item.url}>
+                    <ChevronRight />
+                    <span>{item.title}</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </Collapsible>
+          )
+        })}
       </SidebarMenu>
     </SidebarGroup>
   )

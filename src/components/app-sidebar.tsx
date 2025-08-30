@@ -22,25 +22,29 @@ const data = {
   },
   navMain: [
     {
+      title: 'Dashboard',
+      url: '/app',
+      icon: Command,
+    },
+    {
       title: 'Books',
-      url: '/books',
+      url: '/app/books',
       icon: BookOpen,
-      isActive: true,
     },
     {
       title: 'Movies',
-      url: '/movies',
+      url: '/app/movies',
       icon: Video,
     },
     {
       title: 'Animes',
-      url: '/animes',
+      url: '/app/animes',
       icon: Laptop,
     },
 
     {
       title: 'Websites',
-      url: '/websites',
+      url: '/app/websites',
       icon: ScreenShare,
     },
   ],
@@ -53,7 +57,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/">
+              <a href="/app">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4" />
                 </div>

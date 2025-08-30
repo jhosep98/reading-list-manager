@@ -17,7 +17,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar'
 export function Header() {
   return (
     <header className="flex h-16 shrink-0 items-center gap-2 border-b sticky top-0 z-50 bg-background rounded-t-xl">
-      <div className="flex items-center gap-2 px-3 justify-between w-full">
+      <div className="flex items-center gap-2 px-4 justify-between w-full">
         <div className="flex items-center gap-2 w-full">
           <SidebarTrigger className="-ml-1" />
 

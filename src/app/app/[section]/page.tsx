@@ -1,13 +1,25 @@
+import { Header } from '@/components/header'
 import { MainCard } from '@/components/main-card'
-import { Header } from './components/header'
-import { SubHeader } from './components/sub-header'
+import { SubHeader } from '@/components/sub-header'
 
-export const metadata = {
-  title: 'Animes',
-  description: 'Animes',
+type Props = {
+  params: Promise<{ section: string }>
 }
 
-export default function AnimesPage() {
+export async function generateMetadata({ params }: Props) {
+  const { section } = await params
+
+  return {
+    title: section,
+    description: section,
+  }
+}
+
+export default async function SectionPage({ params }: Props) {
+  const { section } = await params
+
+  console.log(section)
+
   return (
     <>
       <Header />
