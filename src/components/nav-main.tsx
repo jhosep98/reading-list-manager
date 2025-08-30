@@ -1,6 +1,7 @@
 'use client'
 
 import { ChevronRight, type LucideIcon } from 'lucide-react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Collapsible } from '@/components/ui/collapsible'
 import {
@@ -45,10 +46,10 @@ export function NavMain({
                       'bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground',
                   )}
                 >
-                  <a href={item.url}>
+                  <Link href={item.url}>
                     <ChevronRight />
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </Collapsible>
