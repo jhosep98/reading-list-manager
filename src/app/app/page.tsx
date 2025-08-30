@@ -1,5 +1,11 @@
+import type { Metadata } from 'next'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
+
+export const metadata: Metadata = {
+  title: 'Dashboard',
+  description: 'Dashboard',
+}
 
 export default function App() {
   return (
