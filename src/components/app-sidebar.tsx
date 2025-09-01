@@ -26,27 +26,32 @@ const data = {
       title: 'Dashboard',
       url: '/app',
       icon: Command,
+      id: 'app',
     },
     {
       title: 'Books',
       url: '/app/books',
       icon: BookOpen,
+      id: 'books',
     },
     {
       title: 'Movies',
       url: '/app/movies',
       icon: Video,
+      id: 'movies',
     },
     {
       title: 'Animes',
       url: '/app/animes',
       icon: Laptop,
+      id: 'animes',
     },
 
     {
       title: 'Websites',
       url: '/app/websites',
       icon: ScreenShare,
+      id: 'websites',
     },
   ],
 }

@@ -43,10 +43,14 @@ export function Header() {
               </Button>
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle>Add New Item</DialogTitle>
+            <DialogContent
+              className="sm:max-w-md gap-8"
+              aria-describedby="entry-form"
+            >
+              <DialogHeader className="border-b pb-4">
+                <DialogTitle>Add New Entry</DialogTitle>
               </DialogHeader>
+
               <EntryForm />
             </DialogContent>
           </Dialog>

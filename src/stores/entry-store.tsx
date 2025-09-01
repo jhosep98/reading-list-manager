@@ -14,6 +14,7 @@ type Entry = {
   notes: string
   rankingScore: number
   description: string
+  section: string
 }
 
 export type EntryState = {
@@ -46,6 +47,7 @@ export const initEntryStore = (): EntryState => {
         notes:
           'The airing time was Wednesdays 19:00 between October 20, 1999 - March 2001. The airing time was changed to Sundays 19:30 between April 2001 - December 2004. The airing time was changed to Sundays 9:30 between October 6, 2006 - October 13, 2024. The airing time was again changed to Sundays 23:15 on April 6, 2025.',
         rankingScore: 0,
+        section: 'animes',
       },
     ],
   }
@@ -65,6 +67,7 @@ export const defaultEntryState: EntryState = {
       notes: '',
       rankingScore: 0,
       description: '',
+      section: '',
     },
   ],
 }

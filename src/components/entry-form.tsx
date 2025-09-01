@@ -1,10 +1,19 @@
 'use client'
 
-import * as React from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { Button } from './ui/button'
-import { Input } from './ui/input'
-import { Label } from './ui/label'
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -14,161 +23,193 @@ import {
 } from './ui/select'
 import { Textarea } from './ui/textarea'
 
+const formSchema = z.object({
+  title: z.string().min(2),
+  category: z.string(),
+  status: z.string(),
+  ranking: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
+    message: 'Ranking must be a number',
+  }),
+  author: z.string(),
+  notes: z.string(),
+  url: z.url(),
+})
+
 interface EntryFormProps {
   onClose?: () => void
-  defaultValues?: {
-    title: string
-    category: string
-    status: string
-    author: string
-    year: string
-    notes: string
-    rankingScore: string
-  }
+  defaultValues?: z.infer<typeof formSchema>
 }
 
-export function EntryForm({ onClose, defaultValues }: EntryFormProps) {
-  const titleId = React.useId()
-  const authorId = React.useId()
-  const yearId = React.useId()
-  const notesId = React.useId()
-  const rankingScoreId = React.useId()
-
-  const categories = [
-    {
-      name: 'Action',
-      value: 'action',
+export function EntryForm({ defaultValues }: EntryFormProps) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: defaultValues ?? {
+      title: '',
+      category: '',
+      status: '',
+      ranking: '0',
+      author: '',
+      notes: '',
+      url: '',
     },
-  ]
-
-  const [formData, setFormData] = React.useState({
-    title: '',
-    category: '',
-    status: 'to-read',
-    author: '',
-    year: '',
-    notes: '',
-    rankingScore: '',
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values)
 
     toast('Event has been created.')
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor={titleId}>Title</Label>
-
-        <Input
-          id={titleId}
-          value={formData.title}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, title: e.target.value }))
-          }
-          required
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="One Piece" required {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="category">Category</Label>
-        <Select
-          value={formData.category}
-          onValueChange={(value) =>
-            setFormData((prev) => ({ ...prev, category: value }))
-          }
+        <FormField
+          control={form.control}
+          name="url"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>URL</FormLabel>
+              <FormControl>
+                <Input placeholder="https://example.com" required {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="flex gap-4 flex-wrap">
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Category</FormLabel>
+
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  required
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="accion">Accion</SelectItem>
+                    <SelectItem value="romance">Romance</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Status</FormLabel>
+
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  required
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a status" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="backlog">Backlog</SelectItem>
+                    <SelectItem value="todo">Todo</SelectItem>
+                    <SelectItem value="in-progress">In Progress</SelectItem>
+                    <SelectItem value="done">Done</SelectItem>
+                    <SelectItem value="canceled">Canceled</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="flex gap-4 flex-wrap">
+          <FormField
+            control={form.control}
+            name="ranking"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Ranking (0-5)</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min="0"
+                    max="5"
+                    inputMode="numeric"
+                    placeholder="5"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="author"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Author</FormLabel>
+                <FormControl>
+                  <Input placeholder="Eiichiro Oda" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name="notes"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Notes</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Notes" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button
+          type="submit"
+          className="flex-1 w-full"
+          disabled={!form.formState.isValid}
         >
-          <SelectTrigger>
-            <SelectValue placeholder="Select category" />
-          </SelectTrigger>
-          <SelectContent>
-            {categories?.map((category) => (
-              <SelectItem key={category.value} value={category.value}>
-                {category.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="status">Status</Label>
-        <Select
-          value={formData.status}
-          onValueChange={(value: string) =>
-            setFormData((prev) => ({ ...prev, status: value }))
-          }
-        >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="to-read">To Read</SelectItem>
-            <SelectItem value="reading">Reading</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor={rankingScoreId}>Ranking Score (0-10)</Label>
-        <Input
-          id={rankingScoreId}
-          type="number"
-          min="0"
-          max="10"
-          step="0.1"
-          value={formData.rankingScore}
-          placeholder="Rate from 0 to 10"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor={authorId}>Author</Label>
-        <Input
-          id={authorId}
-          value={formData.author}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, author: e.target.value }))
-          }
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor={yearId}>Year</Label>
-        <Input
-          id={yearId}
-          type="number"
-          value={formData.year}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, year: e.target.value }))
-          }
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor={notesId}>Notes</Label>
-        <Textarea
-          id={notesId}
-          value={formData.notes}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, notes: e.target.value }))
-          }
-          rows={3}
-        />
-      </div>
-
-      <div className="flex gap-2 pt-4">
-        <Button type="submit" className="flex-1">
           {defaultValues ? 'Update' : 'Add'}
         </Button>
-
-        <Button type="button" variant="outline" onClick={onClose}>
-          Cancel
-        </Button>
-      </div>
-    </form>
+      </form>
+    </Form>
   )
 }
